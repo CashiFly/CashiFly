@@ -25,7 +25,7 @@
       background: #ffffff;
     }
 
-    /* 🔮 ПРИНУДИТЕЛЬНО ПЕРЕЛИВАЮЩИЙСЯ ФОН — заметная иризация */
+    /* 🔮 ПРИНУДИТЕЛЬНО БЫСТРЫЙ ПЕРЕЛИВАЮЩИЙСЯ ФОН */
     body::before {
       content: "";
       position: fixed;
@@ -34,19 +34,19 @@
       width: 140%;
       height: 140%;
       background: 
-        radial-gradient(circle at 20% 30%, rgba(255, 200, 220, 0.7) 0%, transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(180, 220, 255, 0.8) 0%, transparent 35%),
-        radial-gradient(circle at 40% 80%, rgba(220, 190, 255, 0.6) 0%, transparent 40%),
-        radial-gradient(circle at 70% 20%, rgba(200, 255, 230, 0.5) 0%, transparent 30%),
+        radial-gradient(circle at 20% 30%, rgba(255, 180, 210, 0.75) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(160, 210, 255, 0.8) 0%, transparent 35%),
+        radial-gradient(circle at 40% 80%, rgba(220, 180, 255, 0.7) 0%, transparent 40%),
+        radial-gradient(circle at 70% 20%, rgba(180, 255, 220, 0.6) 0%, transparent 30%),
         linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 248, 255, 0.9) 100%);
       background-blend-mode: overlay, screen, normal, normal;
       background-size: 200% 200%;
-      animation: hologramFlow 16s ease-in-out infinite alternate;
+      animation: hologramFlow 10s ease-in-out infinite alternate;
       z-index: -2;
       pointer-events: none;
     }
 
-    /* дополнительный мерцающий слой для глубины */
+    /* дополнительный мерцающий слой */
     body::after {
       content: "";
       position: fixed;
@@ -62,9 +62,9 @@
 
     @keyframes hologramFlow {
       0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-      25% { background-position: 30% 40%, 60% 30%, 20% 70%, 80% 20%; }
-      50% { background-position: 70% 60%, 20% 50%, 50% 30%, 40% 90%; }
-      75% { background-position: 40% 80%, 80% 10%, 10% 60%, 60% 30%; }
+      25% { background-position: 40% 30%, 70% 20%, 10% 80%, 90% 10%; }
+      50% { background-position: 80% 70%, 10% 60%, 60% 20%, 30% 90%; }
+      75% { background-position: 20% 90%, 90% 40%, 30% 50%, 70% 20%; }
       100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
     }
 
@@ -76,7 +76,6 @@
       z-index: 5;
     }
 
-    /* типографика */
     h1, h2, h3 {
       font-weight: 700;
       letter-spacing: -0.02em;
@@ -120,7 +119,6 @@
       box-shadow: 0 40px 60px -20px rgba(20, 40, 80, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.9);
     }
 
-    /* навигация — удобная для пальцев */
     .nav-links {
       display: flex;
       gap: 1.8rem;
@@ -154,7 +152,6 @@
       margin: 3rem 0 2.5rem;
     }
 
-    /* hero секция */
     .hero-grid {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -215,6 +212,8 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
     }
 
     .carousel-btn {
@@ -275,7 +274,7 @@
       border-color: white;
     }
 
-    /* счётчик — выразительнее */
+    /* счётчик — без автоматического обновления, только статика и дата */
     .counter-block {
       display: flex;
       flex-wrap: wrap;
@@ -330,11 +329,10 @@
     }
 
     .timer-value {
-      font-size: 3.5rem;
-      font-weight: 700;
-      font-feature-settings: "tnum";
+      font-size: 2.2rem;
+      font-weight: 600;
       color: #0b1120;
-      line-height: 1.1;
+      line-height: 1.2;
       margin-bottom: 0.5rem;
     }
 
@@ -344,11 +342,11 @@
       font-weight: 400;
     }
 
-    /* релизы */
+    /* релизы — переработанный дизайн */
     .releases-grid {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.2rem;
     }
 
     .release-item {
@@ -357,46 +355,54 @@
       gap: 2.2rem;
       background: rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(14px);
-      border-radius: 44px;
+      border-radius: 48px;
       padding: 1.8rem 2.4rem 1.8rem 1.8rem;
       border: 1px solid rgba(255, 255, 255, 0.8);
-      transition: 0.2s;
+      transition: all 0.2s;
+      box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.05);
     }
 
     .release-item:hover {
       background: rgba(255, 255, 255, 0.6);
       transform: scale(1.01);
+      box-shadow: 0 25px 40px -16px rgba(20, 40, 80, 0.15);
     }
 
     .release-img {
-      width: 140px;
-      height: 140px;
-      border-radius: 32px;
+      width: 150px;
+      height: 150px;
+      border-radius: 36px;
       object-fit: cover;
-      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.2);
       border: 3px solid white;
       flex-shrink: 0;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .release-info {
+      flex: 1;
     }
 
     .release-info h3 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       font-weight: 700;
       margin-bottom: 0.4rem;
       color: #0e1528;
       letter-spacing: -0.02em;
+      line-height: 1.2;
     }
 
     .release-meta {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 400;
       color: #1e253c;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
-    .release-meta span {
+    .release-badge {
       background: rgba(210, 220, 255, 0.5);
       padding: 0.3rem 1.2rem;
       border-radius: 50px;
@@ -404,6 +410,21 @@
       font-weight: 500;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.6);
+      display: inline-block;
+    }
+
+    .release-date {
+      opacity: 0.8;
+      font-weight: 450;
+    }
+
+    .release-feat {
+      background: rgba(255, 240, 200, 0.3);
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,240,0.5);
     }
 
     /* новости soon */
@@ -443,14 +464,14 @@
       padding-bottom: 1rem;
     }
 
-    /* адаптив под Android / мобильные */
+    /* адаптив */
     @media (max-width: 800px) {
       .container { padding: 1.5rem 1.2rem; }
       .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
       h1 { font-size: 4rem; }
       .total-number { font-size: 4.5rem; }
       .timer-box { padding: 1.5rem 2rem; }
-      .timer-value { font-size: 2.8rem; }
+      .timer-value { font-size: 2rem; }
       .glass-card { padding: 2rem 1.5rem; border-radius: 36px; }
       .nav-links { justify-content: center; gap: 1.2rem; }
       .nav-links a { font-size: 1rem; padding: 0.5rem 0; }
@@ -462,12 +483,12 @@
       .counter-block { flex-direction: column; align-items: flex-start; }
       .release-item { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
       .release-img { width: 100%; height: auto; max-width: 200px; }
-      .release-info h3 { font-size: 1.8rem; }
+      .release-info h3 { font-size: 2rem; }
       .total-number { font-size: 3.8rem; }
       h2 { font-size: 1.9rem; }
+      .timer-value { font-size: 1.8rem; }
     }
 
-    /* улучшение для сенсорных экранов */
     button, .carousel-btn, .dot, .nav-links a { touch-action: manipulation; }
   </style>
 </head>
@@ -507,16 +528,13 @@
         <div class="counter-block">
           <div class="total-plays">
             <span class="total-label">прослушиваний</span>
-            <span class="total-number" id="totalPlaysDisplay">—</span>
+            <span class="total-number" id="totalPlaysDisplay">25 887</span>
           </div>
           <div class="timer-box">
-            <div class="timer-title">⏳ счётчик времени</div>
-            <div class="timer-value" id="countdownDisplay">03:27</div>
-            <div class="timer-interval">+1 прослушивание каждые 3:27</div>
+            <div class="timer-title">📅 обновление раз в месяц</div>
+            <div class="timer-value">следующее — 10.05.2026</div>
+            <div class="timer-interval">данные синхронизируются вручную</div>
           </div>
-        </div>
-        <div style="margin-top: 1.8rem; font-size: 1rem; opacity: 0.7; font-feature-settings: 'tnum';">
-          <span>следующее обновление через <span id="nextInWords">3:27</span></span>
         </div>
       </div>
     </section>
@@ -524,18 +542,26 @@
     <section id="releases" style="margin-top: 4rem;">
       <h2>последние релизы</h2>
       <div class="releases-grid">
+        <!-- Pink Chic -->
         <div class="release-item">
-          <img class="release-img" src="https://i.postimg.cc/WF1tVws3/chad-954e5d76f94c468ba1d2b0e86bf92387.png" alt="Pink Chic cover">
+          <img class="release-img" src="https://i.postimg.cc/WF1tVws3/chad-954e5d76f94c468ba1d2b0e86bf92387.png" alt="Pink Chic cover" loading="lazy">
           <div class="release-info">
             <h3>Pink Chic.</h3>
-            <div class="release-meta">вышел 10 апреля 2026 <span>new</span></div>
+            <div class="release-meta">
+              <span class="release-date">10 апреля 2026</span>
+              <span class="release-badge">new</span>
+            </div>
           </div>
         </div>
+        <!-- Clean Girl -->
         <div class="release-item">
-          <img class="release-img" src="https://i.postimg.cc/Fdwv6yR2/IMG-20260409-194835-254.jpg" alt="Clean Girl">
+          <img class="release-img" src="https://i.postimg.cc/Fdwv6yR2/IMG-20260409-194835-254.jpg" alt="Clean Girl cover" loading="lazy">
           <div class="release-info">
             <h3>Clean Girl</h3>
-            <div class="release-meta">трек с альбома "EMPIRE OF WITCHES" <span>feat. Witch Wtf</span></div>
+            <div class="release-meta">
+              <span class="release-date">альбом "EMPIRE OF WITCHES"</span>
+              <span class="release-feat">feat. Witch Wtf</span>
+            </div>
           </div>
         </div>
       </div>
@@ -559,7 +585,7 @@
     (function(){
       "use strict";
 
-      // ---------- КАРУСЕЛЬ ----------
+      // ---------- КАРУСЕЛЬ (упрощённая, без лишней нагрузки) ----------
       const slides = document.getElementById('carouselSlides');
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
@@ -585,109 +611,18 @@
 
       function nextSlide() { currentIndex = (currentIndex + 1) % slideCount; updateCarousel(); }
       function prevSlide() { currentIndex = (currentIndex - 1 + slideCount) % slideCount; updateCarousel(); }
-      function resetAutoSlide() { if (intervalId) clearInterval(intervalId); intervalId = setInterval(nextSlide, 4500); }
+      function resetAutoSlide() { if (intervalId) clearInterval(intervalId); intervalId = setInterval(nextSlide, 5000); }
 
       prevBtn.addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
       nextBtn.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
       createDots();
       resetAutoSlide();
 
-      // ---------- ГЛОБАЛЬНЫЙ СЧЁТЧИК С ЗАЩИТОЙ ----------
-      const NAMESPACE = 'cashifly';
-      const KEY = 'total_plays';
-      const BASE_URL = 'https://api.countapi.xyz';
-      const INCREMENT_SEC = 207; // 3 мин 27 сек
-      const INCREMENT_MS = INCREMENT_SEC * 1000;
-
+      // ---------- СТАТИЧНЫЙ СЧЁТЧИК (БЕЗ API) ----------
+      // Просто отображаем фиксированное число 25887, без автоматики.
       const totalDisplay = document.getElementById('totalPlaysDisplay');
-      const countdownDisplay = document.getElementById('countdownDisplay');
-      const nextInWordsSpan = document.getElementById('nextInWords');
-
-      let lastLocalIncrement = parseInt(localStorage.getItem('cf_last_increment')) || 0;
-      let totalPlays = 25887;
-      let nextIncrementTime = Date.now() + INCREMENT_MS;
-
-      async function fetchGlobalPlays() {
-        try {
-          const res = await fetch(`${BASE_URL}/get/${NAMESPACE}/${KEY}`);
-          const data = await res.json();
-          if (data.value !== undefined) return data.value;
-        } catch (e) {}
-        try {
-          await fetch(`${BASE_URL}/set/${NAMESPACE}/${KEY}?value=25887`);
-          return 25887;
-        } catch (e) {
-          console.warn('CountAPI недоступен, использую резервное значение');
-          return parseInt(localStorage.getItem('cf_fallback_plays')) || 25887;
-        }
-      }
-
-      async function incrementGlobalPlays() {
-        const now = Date.now();
-        if (now - lastLocalIncrement < INCREMENT_MS) return null;
-        try {
-          const res = await fetch(`${BASE_URL}/hit/${NAMESPACE}/${KEY}`);
-          const data = await res.json();
-          const newValue = data.value;
-          lastLocalIncrement = now;
-          localStorage.setItem('cf_last_increment', lastLocalIncrement);
-          localStorage.setItem('cf_fallback_plays', newValue);
-          return newValue;
-        } catch (e) {
-          totalPlays += 1;
-          localStorage.setItem('cf_fallback_plays', totalPlays);
-          totalDisplay.textContent = totalPlays.toLocaleString();
-          return null;
-        }
-      }
-
-      (async function init() {
-        const serverPlays = await fetchGlobalPlays();
-        totalPlays = serverPlays;
-        totalDisplay.textContent = totalPlays.toLocaleString();
-
-        let startTime = parseInt(localStorage.getItem('cf_timer_start'));
-        if (!startTime) {
-          startTime = Date.now();
-          localStorage.setItem('cf_timer_start', startTime);
-        }
-
-        const elapsed = Date.now() - startTime;
-        const increments = Math.floor(elapsed / INCREMENT_MS);
-        nextIncrementTime = startTime + (increments + 1) * INCREMENT_MS;
-
-        updateTimerAndCheckIncrement();
-        setInterval(updateTimerAndCheckIncrement, 1000);
-      })();
-
-      function formatTimeFromMs(ms) {
-        if (ms < 0) ms = 0;
-        const totalSeconds = Math.floor(ms / 1000);
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-      }
-
-      async function updateTimerAndCheckIncrement() {
-        const now = Date.now();
-        let diff = nextIncrementTime - now;
-
-        if (diff <= 0) {
-          const newTotal = await incrementGlobalPlays();
-          if (newTotal !== null) totalPlays = newTotal;
-          totalDisplay.textContent = totalPlays.toLocaleString();
-
-          const startTime = parseInt(localStorage.getItem('cf_timer_start'));
-          const elapsed = Date.now() - startTime;
-          const increments = Math.floor(elapsed / INCREMENT_MS);
-          nextIncrementTime = startTime + (increments + 1) * INCREMENT_MS;
-          diff = nextIncrementTime - Date.now();
-        }
-
-        const formatted = formatTimeFromMs(diff);
-        countdownDisplay.textContent = formatted;
-        if (nextInWordsSpan) nextInWordsSpan.textContent = formatted;
-      }
+      // Убедимся, что число красиво отформатировано
+      totalDisplay.textContent = '25 887';
 
       // плавный скролл
       document.querySelectorAll('.nav-links a').forEach(anchor => {
