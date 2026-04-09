@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>CashiFly · будущее звучит</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Inter", sans-serif;
+      background: #fcfcfc;
+      min-height: 100vh;
+      color: #0b0b12;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 220, 240, 0.6) 0%, transparent 35%),
+        radial-gradient(circle at 80% 70%, rgba(210, 230, 255, 0.7) 0%, transparent 40%),
+        radial-gradient(circle at 40% 80%, rgba(230, 210, 255, 0.5) 0%, transparent 45%),
+        linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(240, 245, 255, 0.8) 100%);
+      background-blend-mode: overlay, screen, normal;
+      background-size: 200% 200%;
+      animation: hologramFlow 22s ease-in-out infinite;
+      z-index: -2;
+      pointer-events: none;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0) 0px, rgba(210, 230, 255, 0.08) 2px, transparent 8px);
+      backdrop-filter: blur(3px);
+      z-index: -1;
+      pointer-events: none;
+    }
+    @keyframes hologramFlow {
+      0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+      25% { background-position: 40% 30%, 70% 50%, 20% 80%; }
+      50% { background-position: 80% 70%, 20% 20%, 60% 40%; }
+      75% { background-position: 30% 90%, 90% 10%, 10% 70%; }
+      100% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+    }
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      position: relative;
+      z-index: 5;
+    }
+    h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
+    h1 {
+      font-size: clamp(3.8rem, 12vw, 6.2rem);
+      font-weight: 800;
+      background: linear-gradient(145deg, #0f121c, #2a2f44, #1e2538);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.4rem;
+      line-height: 1.05;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+    h2 {
+      font-size: 2.6rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #10131e;
+      border-left: 7px solid #a3adff;
+      padding-left: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 48px;
+      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0,0,0,0.02), inset 0 0 0 1px rgba(255,255,255,0.7);
+      padding: 2.4rem 2.5rem;
+      transition: all 0.25s ease;
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 40px 60px -20px rgba(20, 40, 80, 0.12), inset 0 0 0 1px rgba(255,255,255,0.9);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.8rem;
+      justify-content: flex-end;
+      margin-bottom: 1.8rem;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 550;
+      color: #1a1f2e;
+      padding: 0.6rem 0.1rem;
+      border-bottom: 2.5px solid transparent;
+      transition: 0.2s;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      backdrop-filter: blur(5px);
+    }
+    .nav-links a:hover { border-bottom-color: #6c7cb0; color: #0a0e1a; }
+    hr {
+      border: none;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(60,70,100,0.15), transparent);
+      margin: 3rem 0 2rem;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-text p {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #181e2c;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      padding: 1.6rem 1.8rem;
+      border-radius: 36px;
+      border: 1px solid rgba(255,255,255,0.7);
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      border-radius: 48px;
+      overflow: hidden;
+      box-shadow: 0 35px 50px -20px rgba(0,0,0,0.15);
+      border: 1.5px solid rgba(255,255,255,0.7);
+    }
+    .carousel-slides { display: flex; transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.1); will-change: transform; }
+    .carousel-slide { flex: 0 0 100%; aspect-ratio: 1 / 1.15; }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.9);
+      width: 50px;
+      height: 50px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 32px;
+      font-weight: 200;
+      color: #151c2b;
+      box-shadow: 0 12px 20px -10px rgba(0,0,0,0.08);
+      transition: all 0.2s;
+      user-select: none;
+      z-index: 10;
+    }
+    .carousel-btn:hover { background: white; box-shadow: 0 16px 28px -12px rgba(0,0,0,0.15); color: #000; }
+    .carousel-btn.prev { left: 18px; }
+    .carousel-btn.next { right: 18px; }
+    .carousel-dots { position: absolute; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 20px;
+      background: rgba(255,255,255,0.7); backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.5); transition: 0.2s; cursor: pointer;
+    }
+    .dot.active { width: 34px; background: #1e2538; border-color: white; }
+    .counter-block { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2.5rem; }
+    .total-plays { display: flex; flex-direction: column; }
+    .total-label { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 5px; color: #262e44; opacity: 0.8; }
+    .total-number {
+      font-size: 6.5rem; font-weight: 800; line-height: 1;
+      background: linear-gradient(135deg, #101624, #313a54);
+      -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -3px;
+    }
+    .timer-box {
+      background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(14px); border-radius: 44px;
+      padding: 2rem 2.5rem; border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: inset 0 2px 12px rgba(255,255,255,0.8), 0 18px 30px -16px rgba(0,0,0,0.05);
+      min-width: 280px;
+    }
+    .timer-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem; color: #1f263b; }
+    .timer-value { font-size: 3.2rem; font-weight: 700; font-feature-settings: "tnum"; color: #0e1320; line-height: 1.1; margin-bottom: 0.4rem; }
+    .timer-interval { font-size: 1rem; opacity: 0.7; font-weight: 400; }
+    .releases-grid { display: flex; flex-direction: column; gap: 2rem; }
+    .release-item {
+      display: flex; align-items: center; gap: 2.2rem; background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(12px); border-radius: 40px; padding: 1.6rem 2.2rem 1.6rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.8); transition: 0.2s;
+    }
+    .release-item:hover { background: rgba(255,255,255,0.6); transform: scale(1.01); }
+    .release-img {
+      width: 130px; height: 130px; border-radius: 30px; object-fit: cover;
+      box-shadow: 0 18px 30px -12px rgba(0,0,0,0.15); border: 2.5px solid white; flex-shrink: 0;
+    }
+    .release-info { flex: 1; }
+    .release-info h3 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.3rem; color: #0f1624; letter-spacing: -0.02em; }
+    .release-meta { font-size: 1.1rem; font-weight: 400; color: #242c40; display: flex; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+    .release-meta span {
+      background: rgba(210, 220, 255, 0.5); padding: 0.3rem 1rem; border-radius: 50px;
+      font-size: 0.9rem; font-weight: 500; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.6);
+    }
+    .news-soon { text-align: center; padding: 3.5rem 2rem; }
+    .soon-icon { font-size: 4.5rem; line-height: 1; margin-bottom: 0.8rem; filter: grayscale(1) contrast(1.2); opacity: 0.7; }
+    .soon-text { font-size: 3rem; font-weight: 700; letter-spacing: 6px; color: #141b2b; text-transform: uppercase; }
+    .soon-sub { font-size: 1.1rem; margin-top: 0.5rem; opacity: 0.65; }
+    footer { margin-top: 5rem; text-align: center; opacity: 0.55; font-size: 0.95rem; font-weight: 400; }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .container { padding: 1.8rem 1.5rem; }
+      h1 { font-size: 4.5rem; }
+      .total-number { font-size: 5rem; }
+    }
+    @media (max-width: 600px) {
+      .release-item { flex-direction: column; align-items: flex-start; }
+      .release-img { width: 100%; height: auto; max-width: 240px; }
+      h2 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav-links">
+      <a href="#home">Главная</a>
+      <a href="#counter">Прослушивания</a>
+      <a href="#releases">Релизы</a>
+      <a href="#news">Новости</a>
+    </div>
+
+    <section id="home">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1>CashiFly</h1>
+          <p>Рэп-артистка нового поколения с московскими корнями и нью-йоркским драйвом. Настоящее имя — Джессика Сергеевна Джонсон, родилась 19.02.2006 в Москве. Её музыка сочетает энергию Нью-Йорка и личные истории.</p>
+          <div style="margin-top: 1.5rem; font-weight: 600; letter-spacing: 2px; backdrop-filter: blur(5px); display: inline-block; padding: 0.3rem 1.5rem; border-radius: 60px; background: rgba(255,255,255,0.2);">#CashiFly · будущее</div>
+        </div>
+        <div class="carousel-container">
+          <div class="carousel-slides" id="carouselSlides">
+            <div class="carousel-slide"><img src="https://i.postimg.cc/FKT51pWx/15a26e10-55a6-4614-afcf-27360b04a355.png" alt="CashiFly style 2"></div>
+            <div class="carousel-slide"><img src="https://i.postimg.cc/Y0gsNz3X/67e5ac62-262b-4ef5-b896-b5167d19071b.png" alt="CashiFly style 3"></div>
+          </div>
+          <div class="carousel-btn prev" id="prevBtn">←</div>
+          <div class="carousel-btn next" id="nextBtn">→</div>
+          <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <section id="counter">
+      <h2>общий счётчик</h2>
+      <div class="glass-card">
+        <div class="counter-block">
+          <div class="total-plays">
+            <span class="total-label">прослушиваний</span>
+            <span class="total-number" id="totalPlaysDisplay">—</span>
+          </div>
+          <div class="timer-box">
+            <div class="timer-title">⏳ счётчик времени</div>
+            <div class="timer-value" id="countdownDisplay">03:27</div>
+            <div class="timer-interval">+1 прослушивание каждые 3:27</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; font-size: 1rem; opacity: 0.65; font-feature-settings: 'tnum';">
+          <span>следующее обновление через <span id="nextInWords">3:27</span></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="releases" style="margin-top: 4rem;">
+      <h2>последние релизы</h2>
+      <div class="releases-grid">
+        <div class="release-item">
+          <img class="release-img" src="https://i.postimg.cc/WF1tVws3/chad-954e5d76f94c468ba1d2b0e86bf92387.png" alt="Pink Chic cover">
+          <div class="release-info">
+            <h3>Pink Chic.</h3>
+            <div class="release-meta">вышел 10 апреля 2026 <span>new</span></div>
+          </div>
+        </div>
+        <div class="release-item">
+          <img class="release-img" src="https://i.postimg.cc/Fdwv6yR2/IMG-20260409-194835-254.jpg" alt="Clean Girl">
+          <div class="release-info">
+            <h3>Clean Girl</h3>
+            <div class="release-meta">трек с альбома "EMPIRE OF WITCHES" <span>feat. Witch Wtf</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" style="margin-top: 5rem;">
+      <h2>последние новости</h2>
+      <div class="glass-card news-soon">
+        <div class="soon-icon">⏳🖤🤍</div>
+        <div class="soon-text">SOON</div>
+        <div class="soon-sub">свежие апдейты уже в пути</div>
+      </div>
+    </section>
+
+    <footer>
+      <div>CashiFly · звук завтрашнего дня · 2026</div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+
+      // ---------- КАРУСЕЛЬ ----------
+      const slides = document.getElementById('carouselSlides');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const dotsContainer = document.getElementById('carouselDots');
+      const slideCount = slides.children.length;
+      let currentIndex = 0;
+      let intervalId = null;
+
+      function updateCarousel() {
+        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        Array.from(dotsContainer.children).forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+      }
+
+      function createDots() {
+        for (let i = 0; i < slideCount; i++) {
+          const dot = document.createElement('span');
+          dot.classList.add('dot');
+          if (i === 0) dot.classList.add('active');
+          dot.addEventListener('click', () => { currentIndex = i; updateCarousel(); resetAutoSlide(); });
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function nextSlide() { currentIndex = (currentIndex + 1) % slideCount; updateCarousel(); }
+      function prevSlide() { currentIndex = (currentIndex - 1 + slideCount) % slideCount; updateCarousel(); }
+      function resetAutoSlide() { if (intervalId) clearInterval(intervalId); intervalId = setInterval(nextSlide, 4500); }
+
+      prevBtn.addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
+      nextBtn.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
+      createDots();
+      resetAutoSlide();
+
+      // ---------- ГЛОБАЛЬНЫЙ СЧЁТЧИК С ЗАЩИТОЙ ----------
+      const NAMESPACE = 'cashifly';
+      const KEY = 'total_plays';
+      const BASE_URL = 'https://api.countapi.xyz';
+      const INCREMENT_SEC = 207; // 3 мин 27 сек
+      const INCREMENT_MS = INCREMENT_SEC * 1000;
+
+      const totalDisplay = document.getElementById('totalPlaysDisplay');
+      const countdownDisplay = document.getElementById('countdownDisplay');
+      const nextInWordsSpan = document.getElementById('nextInWords');
+
+      // Защита: локальное время последнего успешного инкремента с этого устройства
+      let lastLocalIncrement = parseInt(localStorage.getItem('cf_last_increment')) || 0;
+
+      // Глобальное значение с сервера
+      let totalPlays = 25887;
+      let nextIncrementTime = Date.now() + INCREMENT_MS;
+
+      // Функция получения значения с сервера
+      async function fetchGlobalPlays() {
+        try {
+          const res = await fetch(`${BASE_URL}/get/${NAMESPACE}/${KEY}`);
+          const data = await res.json();
+          if (data.value !== undefined) return data.value;
+        } catch (e) {}
+        // Если не существует, создаём с начальным
+        try {
+          await fetch(`${BASE_URL}/set/${NAMESPACE}/${KEY}?value=25887`);
+          return 25887;
+        } catch (e) {
+          console.warn('CountAPI недоступен, использую резервное значение');
+          const fallback = parseInt(localStorage.getItem('cf_fallback_plays')) || 25887;
+          return fallback;
+        }
+      }
+
+      // Отправка инкремента с защитой от спама
+      async function incrementGlobalPlays() {
+        const now = Date.now();
+        // Защита: не чаще чем раз в INCREMENT_MS с одного браузера
+        if (now - lastLocalIncrement < INCREMENT_MS) {
+          console.warn('Слишком частый инкремент, пропускаем');
+          return null;
+        }
+
+        try {
+          const res = await fetch(`${BASE_URL}/hit/${NAMESPACE}/${KEY}`);
+          const data = await res.json();
+          const newValue = data.value;
+          // Обновляем время последнего успешного инкремента
+          lastLocalIncrement = now;
+          localStorage.setItem('cf_last_increment', lastLocalIncrement);
+          // Сохраняем резервное значение
+          localStorage.setItem('cf_fallback_plays', newValue);
+          return newValue;
+        } catch (e) {
+          // Ошибка сети — увеличиваем локально и сохраняем для синхронизации позже
+          totalPlays += 1;
+          localStorage.setItem('cf_fallback_plays', totalPlays);
+          totalDisplay.textContent = totalPlays.toLocaleString();
+          console.warn('Ошибка связи с CountAPI, используем локальное значение');
+          return null;
+        }
+      }
+
+      // Инициализация
+      (async function init() {
+        // Получаем актуальное число с сервера
+        const serverPlays = await fetchGlobalPlays();
+        totalPlays = serverPlays;
+        totalDisplay.textContent = totalPlays.toLocaleString();
+
+        // Восстанавливаем или создаём стартовое время для таймера
+        let startTime = parseInt(localStorage.getItem('cf_timer_start'));
+        if (!startTime) {
+          startTime = Date.now();
+          localStorage.setItem('cf_timer_start', startTime);
+        }
+
+        // Рассчитываем время следующего инкремента
+        const elapsed = Date.now() - startTime;
+        const increments = Math.floor(elapsed / INCREMENT_MS);
+        nextIncrementTime = startTime + (increments + 1) * INCREMENT_MS;
+
+        // Запускаем таймер
+        updateTimerAndCheckIncrement();
+        setInterval(updateTimerAndCheckIncrement, 1000);
+      })();
+
+      function formatTimeFromMs(ms) {
+        if (ms < 0) ms = 0;
+        const totalSeconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      }
+
+      async function updateTimerAndCheckIncrement() {
+        const now = Date.now();
+        let diff = nextIncrementTime - now;
+
+        if (diff <= 0) {
+          // Пора инкремент
+          const newTotal = await incrementGlobalPlays();
+          if (newTotal !== null) {
+            totalPlays = newTotal;
+          }
+          totalDisplay.textContent = totalPlays.toLocaleString();
+
+          // Пересчитываем время следующего инкремента
+          const startTime = parseInt(localStorage.getItem('cf_timer_start'));
+          const elapsed = Date.now() - startTime;
+          const increments = Math.floor(elapsed / INCREMENT_MS);
+          nextIncrementTime = startTime + (increments + 1) * INCREMENT_MS;
+          diff = nextIncrementTime - Date.now();
+        }
+
+        const formatted = formatTimeFromMs(diff);
+        countdownDisplay.textContent = formatted;
+        if (nextInWordsSpan) nextInWordsSpan.textContent = formatted;
+      }
+
+      // Плавный скролл
+      document.querySelectorAll('.nav-links a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      window.addEventListener('beforeunload', () => {
+        if (intervalId) clearInterval(intervalId);
+      });
+
+    })();
+  </script>
+</body>
+  </html>
