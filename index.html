@@ -8,635 +8,464 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: "Inter", sans-serif;
-      min-height: 100vh;
-      color: #0b0b12;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      position: relative;
       background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeSpeed;
     }
 
-    /* 💎 ЯРКИЙ, ЗАМЕТНЫЙ ПЕРЕЛИВ НА БЕЛОМ ФОНЕ */
     body::before {
       content: "";
       position: fixed;
-      top: -20%;
-      left: -20%;
-      width: 140%;
-      height: 140%;
-      background: 
-        radial-gradient(circle at 25% 30%, rgba(200, 220, 255, 0.9) 0%, transparent 30%),
-        radial-gradient(circle at 75% 70%, rgba(255, 200, 220, 0.85) 0%, transparent 35%),
-        radial-gradient(circle at 50% 50%, rgba(220, 240, 200, 0.8) 0%, transparent 40%),
-        radial-gradient(circle at 80% 20%, rgba(230, 210, 255, 0.9) 0%, transparent 30%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 250, 255, 0.95) 100%);
-      background-blend-mode: overlay, screen, normal, normal;
+      top: -20%; left: -20%; width: 140%; height: 140%;
+      background: radial-gradient(circle at 25% 35%, rgba(255,220,240,0.8) 0%, transparent 40%),
+                  radial-gradient(circle at 75% 65%, rgba(220,240,255,0.8) 0%, transparent 40%),
+                  linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(250,250,255,0.95) 100%);
       background-size: 200% 200%;
-      animation: luxuryFlow 12s ease-in-out infinite alternate;
+      animation: bodyFlow 14s ease-in-out infinite alternate;
       z-index: -2;
       pointer-events: none;
       will-change: background-position;
       transform: translateZ(0);
     }
-
-    /* дополнительный лёгкий слой для объёма */
-    body::after {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
-      z-index: -1;
-      pointer-events: none;
+    @keyframes bodyFlow {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
     }
 
-    @keyframes luxuryFlow {
-      0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-      50% { background-position: 60% 40%, 30% 70%, 80% 20%, 40% 80%; }
-      100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+    .tabs {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 2rem; position: relative; z-index: 10;
+    }
+    .tab-btn {
+      background: rgba(255,255,255,0.5); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.8); padding: 0.8rem 1.8rem;
+      border-radius: 40px; font-weight: 600; font-size: 1rem; cursor: pointer;
+      transition: 0.2s; color: #1a1f30;
+      touch-action: manipulation;
+    }
+    .tab-btn.active { background: #1a1f30; color: white; }
+
+    .tab-panel { display: none; width: 100%; }
+    .tab-panel.active { display: block; }
+
+    .hero-card {
+      max-width: 700px; margin: 0 auto; background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius: 48px; padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.7); text-align: center;
+    }
+    .hero-card h1 {
+      font-size: 4rem; font-weight: 800;
+      background: linear-gradient(145deg, #0a0f1c, #232a40);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .carousel { display: flex; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
+    .carousel img {
+      width: 100px; height: 100px; border-radius: 24px; object-fit: cover;
+      transform: translateZ(0); backface-visibility: hidden;
     }
 
-    .container {
-      max-width: 1360px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-      position: relative;
-      z-index: 5;
+    .section-title {
+      font-weight: 600; margin: 1.5rem 0 0.2rem;
+      font-size: 1.4rem; color: #1a1f30; text-align: center;
     }
 
-    h1, h2, h3 {
-      font-weight: 700;
-      letter-spacing: -0.02em;
+    .socials-box {
+      background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius: 36px; padding: 1.5rem 2rem; margin-top: 0.8rem;
+      border: 1px solid rgba(255,255,255,0.6);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: 1.2rem;
+    }
+    .social-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(255,255,255,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.8); transition: 0.2s;
+      touch-action: manipulation;
+    }
+    .social-icon svg { width: 60%; height: 60%; fill: #1a1f30; }
+    .social-icon:hover { transform: scale(1.1); background: rgba(255,255,255,0.7); }
+
+    .counter-card {
+      max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius: 48px; padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.7); text-align: center;
     }
 
-    h1 {
-      font-size: clamp(3.5rem, 12vw, 6rem);
-      font-weight: 800;
-      background: linear-gradient(145deg, #0a0f1c, #232a40, #1a1f30);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 0.5rem;
-      line-height: 1.1;
-      text-shadow: 0 2px 20px rgba(80, 100, 180, 0.1);
+    .releases-wrapper {
+      display: flex; flex-direction: column; gap: 2rem; max-width: 800px; margin: 0 auto; width: 100%;
     }
-
-    h2 {
-      font-size: clamp(2rem, 7vw, 2.8rem);
-      font-weight: 650;
-      margin-bottom: 2rem;
-      color: #0e1320;
-      border-left: 7px solid #a0aaff;
-      padding-left: 1.5rem;
-      letter-spacing: -0.02em;
+    .release-row {
+      display: flex; gap: 1.2rem; align-items: stretch; width: 100%;
     }
-
-    .glass-card {
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 48px;
-      box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.08);
-      padding: 2.5rem 2.5rem;
-      transition: transform 0.2s ease;
-      will-change: transform;
-    }
-
-    .glass-card:hover {
-      background: rgba(255, 255, 255, 0.6);
-      transform: scale(1.01);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.8rem;
-      justify-content: flex-end;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      padding: 0.5rem 0;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 550;
-      color: #181e30;
-      padding: 0.8rem 0.2rem;
-      border-bottom: 2.5px solid transparent;
-      transition: 0.2s;
-      font-size: 1.2rem;
-      letter-spacing: -0.01em;
-      backdrop-filter: blur(5px);
-    }
-
-    .nav-links a:hover {
-      border-bottom-color: #7a8bc0;
-      color: #05080f;
-    }
-
-    hr {
-      border: none;
-      height: 1.5px;
-      background: linear-gradient(90deg, transparent, rgba(60, 70, 100, 0.2), transparent);
-      margin: 3rem 0 2.5rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 2.5rem;
-      align-items: center;
-    }
-
-    .hero-text p {
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #121826;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(8px);
-      padding: 1.8rem 2rem;
-      border-radius: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      margin-bottom: 1.2rem;
-      line-height: 1.6;
-      box-shadow: 0 8px 20px -10px rgba(0,0,0,0.05);
-    }
-
-    .hero-tag {
-      margin-top: 1.2rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      backdrop-filter: blur(5px);
-      display: inline-block;
-      padding: 0.5rem 1.8rem;
-      border-radius: 60px;
-      background: rgba(255, 255, 255, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      font-size: 1rem;
-    }
-
-    /* карусель */
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      border-radius: 40px;
-      overflow: hidden;
-      box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.15);
-      border: 1.5px solid rgba(255, 255, 255, 0.8);
-    }
-
-    .carousel-slides {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.1);
-      will-change: transform;
-    }
-
-    .carousel-slide {
-      flex: 0 0 100%;
-      aspect-ratio: 1 / 1.1;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      image-rendering: -webkit-optimize-contrast;
+    .release {
+      flex: 1; border-radius: 40px; overflow: hidden; position: relative;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.2); min-height: 140px;
       transform: translateZ(0);
-      backface-visibility: hidden;
     }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      width: 48px;
-      height: 48px;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 30px;
-      font-weight: 200;
-      color: #141c2c;
-      box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
-      transition: all 0.2s;
-      user-select: none;
-      z-index: 10;
+    .release-bg {
+      position: absolute; top:0; left:0; width:100%; height:100%;
+      background-size: 400% 400%; animation: gradientShift 10s ease infinite alternate;
+      z-index:0; will-change: background-position;
     }
+    @keyframes gradientShift { 0%{background-position:0% 0%;} 100%{background-position:100% 100%;} }
 
-    .carousel-btn:hover {
-      background: white;
-      box-shadow: 0 16px 28px -12px rgba(0, 0, 0, 0.15);
+    .floating-words { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:hidden; }
+    .floating-word {
+      position:absolute; white-space:nowrap; font-size:1.5rem; font-weight:700;
+      opacity:0.3; background:rgba(255,255,255,0.2); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+      padding:0.2rem 1rem; border-radius:30px; left:5%;
+      animation:floatDown 9s linear infinite; will-change: transform;
     }
+    .floating-word:nth-child(2) { left:65%; animation-delay:-3s; }
+    .floating-word:nth-child(3) { left:35%; animation-delay:-6s; }
+    @keyframes floatDown { 0%{top:-20%; transform:translateX(0);} 100%{top:110%; transform:translateX(30px);} }
 
-    .carousel-btn.prev { left: 16px; }
-    .carousel-btn.next { right: 16px; }
-
-    .carousel-dots {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
+    .release-content {
+      position:relative; z-index:2; display:flex; align-items:center; gap:1.5rem;
+      padding:1.8rem 2rem; background:rgba(0,0,0,0.15); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+      border-radius:40px; height:100%;
     }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      transition: 0.2s;
-      cursor: pointer;
-    }
-
-    .dot.active {
-      width: 34px;
-      background: #1b2338;
-      border-color: white;
-    }
-
-    /* счётчик — статичный */
-    .counter-block {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2.5rem;
-    }
-
-    .total-plays {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .total-label {
-      font-size: 1rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 6px;
-      color: #1c233b;
-      opacity: 0.8;
-    }
-
-    .total-number {
-      font-size: 6.5rem;
-      font-weight: 800;
-      line-height: 1;
-      background: linear-gradient(135deg, #0c1120, #29324d);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -3px;
-      text-shadow: 0 0 20px rgba(80, 100, 200, 0.1);
-    }
-
-    .timer-box {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(8px);
-      border-radius: 48px;
-      padding: 2.2rem 2.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: inset 0 2px 12px rgba(255, 255, 255, 0.8), 0 20px 30px -16px rgba(0, 0, 0, 0.05);
-      min-width: 280px;
-    }
-
-    .timer-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 1.2rem;
-      color: #151d30;
-    }
-
-    .timer-value {
-      font-size: 2.2rem;
-      font-weight: 600;
-      color: #0b1120;
-      line-height: 1.2;
-      margin-bottom: 0.5rem;
-    }
-
-    .timer-interval {
-      font-size: 1rem;
-      opacity: 0.7;
-      font-weight: 400;
-    }
-
-    /* релизы */
-    .releases-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 2.2rem;
-    }
-
-    .release-item {
-      display: flex;
-      align-items: center;
-      gap: 2.2rem;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(8px);
-      border-radius: 48px;
-      padding: 1.8rem 2.4rem 1.8rem 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      transition: all 0.2s;
-      box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.05);
-      will-change: transform;
-    }
-
-    .release-item:hover {
-      background: rgba(255, 255, 255, 0.7);
-      transform: scale(1.01);
-      box-shadow: 0 25px 40px -16px rgba(20, 40, 80, 0.15);
-    }
-
-    .release-img {
-      width: 150px;
-      height: 150px;
-      border-radius: 36px;
-      object-fit: cover;
-      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.2);
-      border: 3px solid white;
-      flex-shrink: 0;
-      image-rendering: -webkit-optimize-contrast;
+    .release-cover {
+      width:100px; height:100px; border-radius:24px; overflow:hidden;
+      border:2px solid rgba(255,255,255,0.5); flex-shrink:0;
       transform: translateZ(0);
-      backface-visibility: hidden;
+    }
+    .release-cover img { width:100%; height:100%; object-fit:cover; }
+    .release-text { color:white; }
+    .release-title { font-size:2rem; font-weight:800; }
+    .release-artist { font-size:0.95rem; opacity:0.9; }
+    .release-date { font-size:0.85rem; opacity:0.7; }
+    .platforms-row { display:flex; gap:0.4rem; margin-top:0.5rem; }
+    .plat-icon {
+      display:flex; align-items:center; justify-content:center; width:34px; height:34px;
+      background:rgba(255,255,255,0.2); border-radius:50%; font-size:0.75rem;
+      color:white; text-decoration:none; touch-action:manipulation;
     }
 
-    .release-info {
-      flex: 1;
+    .info-squares { display: flex; flex-direction: column; gap: 0.8rem; width: 130px; flex-shrink: 0; }
+    .info-square {
+      flex: 1; background: rgba(255,255,255,0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius: 28px; border: 1px solid rgba(255,255,255,0.7);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.3rem; cursor: pointer; transition: 0.2s; font-weight: 600; color: #1a1f30;
+      box-shadow: 0 10px 20px -8px rgba(0,0,0,0.08); touch-action: manipulation;
+    }
+    .info-square:hover { background: rgba(255,255,255,0.6); transform: translateY(-2px); }
+    .info-square div:first-child { font-size: 1.8rem; }
+
+    .modal {
+      position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7);
+      display:flex; align-items:center; justify-content:center; z-index:100;
+      visibility:hidden; opacity:0; transition:0.3s;
+    }
+    .modal.active { visibility:visible; opacity:1; }
+    .modal-content {
+      max-width:600px; width:90%; max-height:80vh; overflow-y:auto; border-radius:40px;
+      padding:2.5rem; border:1px solid rgba(255,255,255,0.3);
+      position:relative; color:white; background-size:400% 400%;
+      animation: gradientShift 10s ease infinite alternate;
+      will-change: background-position;
+    }
+    .modal .close {
+      position: sticky; top: 10px; float: right; font-size: 2rem; cursor: pointer;
+      z-index: 5; background: rgba(0,0,0,0.4); width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center; border-radius: 50%;
+      margin-bottom: -40px; margin-right: -10px;
+    }
+    .modal-text {
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius: 24px; padding: 2rem; white-space: pre-wrap; line-height: 1.7;
+      font-size: 1rem; word-wrap: break-word;
     }
 
-    .release-info h3 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      color: #0e1528;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
+    .modal.pink .modal-content { background: linear-gradient(145deg, #ff4d4d, #cc3333, #ff6666, #cc2929); }
+    .modal.clean .modal-content { background: linear-gradient(145deg, #111, #1a1a1a, #0d0d0d, #1f1f1f); }
+    .modal.clean .modal-text { color: #b0ff90; }
+    .modal.mommy .modal-content { background: linear-gradient(145deg, #1a3b1a, #2d5a2d, #0f2b0f, #3b693b); }
+    .modal.sarcasm .modal-content { background: linear-gradient(145deg, #cc3333, #ff4d4d, #cc2929, #ff6666); }
+    .modal.fly .modal-content { background: linear-gradient(145deg, #ff8c42, #ff6b2b, #ffb347, #ff9f55); }
+
+    .pink .release-bg { background:linear-gradient(125deg, #ff4d4d, #cc3333, #ff6666); }
+    .clean .release-bg { background:linear-gradient(125deg, #111, #1a1a1a); }
+    .clean .release-text { color:#b0ff90; }
+    .mommy .release-bg { background:linear-gradient(125deg, #1a3b1a, #2d5a2d); }
+    .sarcasm .release-bg { background:linear-gradient(125deg, #cc3333, #ff4d4d, #cc2929); }
+    .fly .release-bg { background:linear-gradient(125deg, #ff8c42, #ff6b2b); }
+
+    .cashi-feed {
+      max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; width: 100%;
+    }
+    .feed-item {
+      background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius: 36px; overflow: hidden; box-shadow: 0 15px 25px -10px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,255,255,0.7); cursor: pointer; transition: transform 0.2s;
+      transform: translateZ(0); touch-action: manipulation;
+    }
+    .feed-item:hover { transform: scale(1.02); }
+    .feed-item img { width: 100%; height: auto; display: block; object-fit: cover; }
+
+    .lightbox {
+      position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9);
+      display:flex; align-items:center; justify-content:center; z-index:200;
+      visibility:hidden; opacity:0; transition:0.3s;
+    }
+    .lightbox.active { visibility:visible; opacity:1; }
+    .lightbox-content {
+      position:relative; max-width:90%; max-height:90%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .lightbox-img {
+      max-width:100%; max-height:80vh; border-radius:24px;
+      box-shadow:0 30px 50px rgba(0,0,0,0.5); border:2px solid rgba(255,255,255,0.2);
+    }
+    .lightbox-close, .lightbox-nav, .lightbox-download {
+      position:absolute; color:white; background:rgba(0,0,0,0.5);
+      border:none; border-radius:50%; width:48px; height:48px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:24px; transition:0.2s; z-index:10;
+      touch-action: manipulation;
+    }
+    .lightbox-close:hover, .lightbox-nav:hover, .lightbox-download:hover { background:rgba(255,255,255,0.2); }
+    .lightbox-close { top:20px; right:20px; }
+    .lightbox-nav.prev { left:20px; top:50%; transform:translateY(-50%); }
+    .lightbox-nav.next { right:20px; top:50%; transform:translateY(-50%); }
+    .lightbox-download { bottom:20px; right:20px; }
+    .lightbox-close::before { content:"✕"; }
+    .lightbox-nav.prev::before { content:"‹"; font-size:36px; }
+    .lightbox-nav.next::before { content:"›"; font-size:36px; }
+    .lightbox-download::before { content:"⬇"; }
+
+    .news-card {
+      max-width:500px; margin:0 auto; background:rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-radius:48px; padding:3rem; text-align:center;
     }
 
-    .release-meta {
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: #1e253c;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+    @media (max-width:650px) {
+      body { padding: 1.5rem 0.8rem; }
+      .release-row { flex-direction: column; }
+      .info-squares { flex-direction: row; width:100%; height:90px; }
+      .cashi-feed { max-width: 100%; }
+      .hero-card h1 { font-size: 3rem; }
+      .release-title { font-size: 1.5rem; }
+      .modal-content { padding: 1.5rem; }
+      .tabs { gap: 0.3rem; }
+      .tab-btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
     }
-
-    .release-badge {
-      background: rgba(210, 220, 255, 0.6);
-      padding: 0.3rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      display: inline-block;
-    }
-
-    .release-date {
-      opacity: 0.8;
-      font-weight: 450;
-    }
-
-    .release-feat {
-      background: rgba(255, 240, 200, 0.5);
-      padding: 0.2rem 1rem;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,240,0.5);
-    }
-
-    /* новости soon */
-    .news-soon {
-      text-align: center;
-      padding: 3.5rem 2rem;
-    }
-
-    .soon-icon {
-      font-size: 5rem;
-      line-height: 1;
-      margin-bottom: 1rem;
-      filter: grayscale(1) contrast(1.2);
-      opacity: 0.7;
-    }
-
-    .soon-text {
-      font-size: 3.5rem;
-      font-weight: 700;
-      letter-spacing: 8px;
-      color: #11182b;
-      text-transform: uppercase;
-    }
-
-    .soon-sub {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
-      opacity: 0.65;
-    }
-
-    footer {
-      margin-top: 5rem;
-      text-align: center;
-      opacity: 0.6;
-      font-size: 0.95rem;
-      font-weight: 400;
-      padding-bottom: 1rem;
-    }
-
-    /* адаптив */
-    @media (max-width: 800px) {
-      .container { padding: 1.5rem 1.2rem; }
-      .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
-      h1 { font-size: 4rem; }
-      .total-number { font-size: 4.5rem; }
-      .timer-box { padding: 1.5rem 2rem; }
-      .timer-value { font-size: 2rem; }
-      .glass-card { padding: 2rem 1.5rem; border-radius: 36px; }
-      .nav-links { justify-content: center; gap: 1.2rem; }
-      .nav-links a { font-size: 1rem; padding: 0.5rem 0; }
-    }
-
-    @media (max-width: 480px) {
-      h1 { font-size: 3.2rem; }
-      .hero-text p { font-size: 1rem; padding: 1.2rem 1.5rem; }
-      .counter-block { flex-direction: column; align-items: flex-start; }
-      .release-item { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
-      .release-img { width: 100%; height: auto; max-width: 200px; }
-      .release-info h3 { font-size: 2rem; }
-      .total-number { font-size: 3.8rem; }
-      h2 { font-size: 1.9rem; }
-      .timer-value { font-size: 1.8rem; }
-    }
-
-    button, .carousel-btn, .dot, .nav-links a { touch-action: manipulation; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="nav-links">
-      <a href="#home">Главная</a>
-      <a href="#counter">Прослушивания</a>
-      <a href="#releases">Релизы</a>
-      <a href="#news">Новости</a>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-home">Главная</button>
+    <button class="tab-btn" data-tab="tab-counter">Прослушивания</button>
+    <button class="tab-btn" data-tab="tab-releases">Релизы</button>
+    <button class="tab-btn" data-tab="tab-cashigram">CashiGram</button>
+    <button class="tab-btn" data-tab="tab-news">Новости</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-home">
+    <div class="hero-card">
+      <h1>CashiFly</h1>
+      <p>Рэп-артистка нового поколения с московскими корнями и нью-йоркским драйвом. Джессика Сергеевна Джонсон, 19.02.2006. Музыка сочетает энергию Нью-Йорка и личные истории.</p>
+      <div class="carousel">
+        <img src="https://i.postimg.cc/FKT51pWx/15a26e10-55a6-4614-afcf-27360b04a355.png" alt="Фото 2" loading="lazy">
+        <img src="https://i.postimg.cc/Y0gsNz3X/67e5ac62-262b-4ef5-b896-b5167d19071b.png" alt="Фото 3" loading="lazy">
+      </div>
+      <div class="section-title">Соцсети</div>
+      <div class="socials-box">
+        <a href="https://t.me/CashiFly" target="_blank" class="social-icon" title="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.66-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.41-.88.03-.24.37-.49 1.02-.74 3.98-1.73 6.64-2.87 7.98-3.42 3.8-1.58 4.6-1.85 5.11-1.86.11 0 .37.03.54.17.14.12.18.28.2.45-.01.06.01.24 0 .38z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@Cashi-Fly" target="_blank" class="social-icon" title="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+        </a>
+        <a href="https://genius.com/artists/Cashifly" target="_blank" class="social-icon" title="Genius">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-.07 16.5c-3.58 0-6.5-2.92-6.5-6.5s2.92-6.5 6.5-6.5c1.8 0 3.42.73 4.6 1.9l-1.06 1.06C14.47 7.47 13.28 7 11.93 7c-2.76 0-5 2.24-5 5s2.24 5 5 5c2.21 0 4.07-1.43 4.73-3.43H11.93v-1.5h5.77c.15.45.23.93.23 1.43 0 3.3-2.69 6-6 6z"/></svg>
+        </a>
+        <a href="https://open.spotify.com/artist/6Yb949SwKAW3LSCkIyLwjy?si=PcydQhj1QI2GtVMF3Rynqg" target="_blank" class="social-icon" title="Spotify">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1.5-5.5V8l6 3.5-6 3.5z"/></svg>
+        </a>
+        <a href="https://music.yandex.ru/artist/25382461?utm_medium=copy_link&ref_id=e2bc479a-5fe1-4078-91ed-f043b9a4e670" target="_blank" class="social-icon" title="Яндекс Музыка">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" fill="#FFD700" font-size="10" font-weight="bold">Я</text></svg>
+        </a>
+      </div>
     </div>
+  </div>
 
-    <section id="home">
-      <div class="hero-grid">
-        <div class="hero-text">
-          <h1>CashiFly</h1>
-          <p>Рэп-артистка нового поколения с московскими корнями и нью-йоркским драйвом. Настоящее имя — Джессика Сергеевна Джонсон, родилась 19.02.2006 в Москве. Её музыка сочетает энергию Нью-Йорка и личные истории.</p>
-          <div class="hero-tag">#CashiFly · будущее</div>
-        </div>
-        <div class="carousel-container">
-          <div class="carousel-slides" id="carouselSlides">
-            <div class="carousel-slide"><img src="https://i.postimg.cc/FKT51pWx/15a26e10-55a6-4614-afcf-27360b04a355.png" alt="CashiFly style 2"></div>
-            <div class="carousel-slide"><img src="https://i.postimg.cc/Y0gsNz3X/67e5ac62-262b-4ef5-b896-b5167d19071b.png" alt="CashiFly style 3"></div>
-          </div>
-          <div class="carousel-btn prev" id="prevBtn">←</div>
-          <div class="carousel-btn next" id="nextBtn">→</div>
-          <div class="carousel-dots" id="carouselDots"></div>
-        </div>
-      </div>
-    </section>
-
-    <hr>
-
-    <section id="counter">
+  <div class="tab-panel" id="tab-counter">
+    <div class="counter-card">
       <h2>общий счётчик</h2>
-      <div class="glass-card">
-        <div class="counter-block">
-          <div class="total-plays">
-            <span class="total-label">прослушиваний</span>
-            <span class="total-number" id="totalPlaysDisplay">25 887</span>
-          </div>
-          <div class="timer-box">
-            <div class="timer-title">📅 обновление раз в месяц</div>
-            <div class="timer-value">следующее — 10.05.2026</div>
-            <div class="timer-interval">данные синхронизируются вручную</div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <div style="font-size:5rem; font-weight:800;">40 767</div>
+      <p>обновление 10.06.2026</p>
+    </div>
+  </div>
 
-    <section id="releases" style="margin-top: 4rem;">
-      <h2>последние релизы</h2>
-      <div class="releases-grid">
-        <div class="release-item">
-          <img class="release-img" src="https://i.postimg.cc/WF1tVws3/chad-954e5d76f94c468ba1d2b0e86bf92387.png" alt="Pink Chic cover" loading="lazy">
-          <div class="release-info">
-            <h3>Pink Chic.</h3>
-            <div class="release-meta">
-              <span class="release-date">10 апреля 2026</span>
-              <span class="release-badge">new</span>
-            </div>
-          </div>
-        </div>
-        <div class="release-item">
-          <img class="release-img" src="https://i.postimg.cc/Fdwv6yR2/IMG-20260409-194835-254.jpg" alt="Clean Girl cover" loading="lazy">
-          <div class="release-info">
-            <h3>Clean Girl</h3>
-            <div class="release-meta">
-              <span class="release-date">альбом "EMPIRE OF WITCHES"</span>
-              <span class="release-feat">feat. Witch Wtf</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="tab-panel" id="tab-releases">
+    <div class="releases-wrapper" id="releasesContainer"></div>
+  </div>
 
-    <section id="news" style="margin-top: 5rem;">
-      <h2>последние новости</h2>
-      <div class="glass-card news-soon">
-        <div class="soon-icon">⏳🖤🤍</div>
-        <div class="soon-text">SOON</div>
-        <div class="soon-sub">свежие апдейты уже в пути</div>
-      </div>
-    </section>
+  <div class="tab-panel" id="tab-cashigram">
+    <h2 style="text-align:center; margin-bottom:2rem; font-weight:700;">CashiGram</h2>
+    <div class="cashi-feed" id="cashiFeed"></div>
+  </div>
 
-    <footer>
-      <div>CashiFly · звук завтрашнего дня · 2026</div>
-    </footer>
+  <div class="tab-panel" id="tab-news">
+    <div class="news-card">
+      <div style="font-size:4rem;">⏳</div>
+      <div style="font-size:2.5rem; font-weight:700;">SOON</div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <img id="lightboxImg" class="lightbox-img" src="" alt="">
+      <button class="lightbox-close" id="lightboxClose"></button>
+      <button class="lightbox-nav prev" id="lightboxPrev"></button>
+      <button class="lightbox-nav next" id="lightboxNext"></button>
+      <button class="lightbox-download" id="lightboxDownload" title="Сохранить / Открыть"></button>
+    </div>
   </div>
 
   <script>
-    (function(){
-      "use strict";
+    const releasesData = [
+      { id:"pink", title:"Pink Chic", artist:"CashiFly", date:"10.04.2026", cover:"https://i.postimg.cc/WF1tVws3/chad-954e5d76f94c468ba1d2b0e86bf92387.png", color:"pink", word:"Pink Chic", platforms:[{n:"AM",u:"https://music.apple.com/ru/album/1889355692"},{n:"SP",u:"https://open.spotify.com/album/6N4iDBGiPIQ5Le9pTaGWTD"},{n:"VK",u:"https://music.vk.com/link/0IjMs"}], info:"Pink Chik должен был стать первым треком с альбома \"Candy Carry\", но позже исполнительница поняла, что трек не подходит под стилистику альбома и решила что не будет вставлять его в альбом. Более того, артистка даже имеет планы на удаление трека с площадок, так как тот, по мнению артистки, \"не вписывается в её образ\".", lyrics:"[Интро] \nPink Chic, Pink Chic..\n\n[Припев] \nPink Chic, у меня каблуки больше чем твой член (Pink, Pink)\nPink bitch, дорогой маник, я новая шанэль (Chic, Chic)\nPink pop, Pink rap, все эти суки fat\nмой стиль - Pink Chic, я завожу в кэмэ слэй\n\n[Куплет]\nновая сумка CandyCarry у меня в руках\nдешевки лижут мне в отеле в своих сладких снах\nЯ посылаю нахуй твой флоу, ведь ты пидорас\nне можешь связать пары слов, это пиздос\nмне похуй что скажут про меня немощи\nведь они могут лишь попросить мелочи\n\n[Куплет 2]\nБриллианты VVS, детка, это не стразы\nBitch, все что я хочу, я получаю сразу\nсучки встали на колени, Флай отдает приказы\nсливать гс в свои каналы - это какая стадия?\nDirty money, clean look, я икона стиля\nЯ включаю свои треки, танцуя на её могиле\n\n[Припев] \nPink Chic, у меня каблуки больше чем твой член (Pink, Pink)\nPink bitch, дорогой маник, я новая шанэль (Chic, Chic)\nPink pop, Pink rap, все эти суки fat\nмой стиль - Pink Chic, я завожу в кэмэ слэй" },
+      { id:"clean", title:"Clean Girl", artist:"CashiFly, Witch Wtf", date:"10.04.2026", cover:"https://i.postimg.cc/Fdwv6yR2/IMG-20260409-194835-254.jpg", color:"clean", word:"Clean Girl", platforms:[], info:"Трек с альбома Empire of Witches.", lyrics:"[Припев] \nЯ распущу свои когти, в лимузине party с моими girls ночью\nМы убиваем одним взглядом, это точно\nМое сердце для тебя закрыто и точка!\n(Закрыто и точка!)\n\nНа автопилоте, качу по городу как supersonic и ты хочешь\nБыть со мной, но твоя мания ко мне это звоночек\nТы не знаешь грани boy, я вышвырну тебя за дверь и точка!\nДля тебя дверь закрыта и точка!\n\n[Куплет 1] (witch wtf)\nНе скажу, кто я такая\nМои сучки сами всё знают\nSlay стиль, дорогой vibe\nЭта girl жаждет со мной хайп\n\nНовый день\nНовый респект за трек\nСажусь в машину\nКак заработала-секрет\n\n[Припев] \nЯ распущу свои когти, в лимузине party с моими girls ночью\nМы убиваем одним взглядом, это точно\nМое сердце для тебя закрыто и точка!\n(Закрыто и точка!)\n\nНа автопилоте, качу по городу как supersonic и ты хочешь\nБыть со мной, но твоя мания ко мне это звоночек\nТы не знаешь грани boy, я вышвырну тебя за дверь и точка!\nДля тебя дверь закрыта и точка!\n\n[Куплет 2] (CashiFly)\nСкинни-фит, белый оверсайз, как саван\nClean Girl, выпирают бубсы, собираю залы\nCashiFly, яхта CandyCarry, bitch, я плачу налом\nДорогая сумка Sicily бренда Dolce&Gabbana\nСвежий матча, ахуенный маник, в сумке Platinum Card\nМой дизайн, это high-end твой - avangard\nЧисто сучий вайб, детка, это pure art\nФлай с фитом в здании, отымели чарт\n\n[Припев] \nЯ распущу свои когти, в лимузине party с моими girls ночью\nМы убиваем одним взглядом, это точно\nМое сердце для тебя закрыто и точка!\n(Закрыто и точка!)\n\nНа автопилоте, качу по городу как supersonic и ты хочешь\nБыть со мной, но твоя мания ко мне это звоночек\nТы не знаешь грани boy, я вышвырну тебя за дверь и точка!\nДля тебя дверь закрыта и точка!" },
+      { id:"mommy", title:"Mommy", artist:"CashiFly, Diviaxel", date:"12.03.2026", cover:"https://i.postimg.cc/5jT5L6X1/IMG-20260430-183759-735.jpg", color:"mommy", word:"Mommy", platforms:[], info:"фит двух легенд комьюнити!", lyrics:"[Интро: diviaxel]\nДа-да-да-да, mommy!\nHoney-honey, honey-honey\nHoney-honey, honey-honey\nHoney-honey, honey\nDi-di-di-di, та\n\n[Куплет 1: diviaxel]\nDi-diva из Hollywood'а\nТы — не человек, ты будто из wood'а\nУ меня в кармане кукла вуду\nПохожа на тебя, но она не из wood'а (А)\nО боже, baby, помоги\nЯ как будто OG\nЦелуй мои две руки\nСкорее — мы ща улетим\nЯ-я-я — королева комбо, выгляжу как бомба\nУже стоим на повороте\nМне уже плохо от твоего вздоха\nСбиваю эту суку я своим капотом\nДа, я — не juice, я выгляжу как juicy\nДевочка целует мою pussy\nЭто не Киевская Русь — домой я уже рвусь\n— Эй, бармен, налей мне любимый смузи!\n[Бридж: diviaxel]\nЭй, Эмма (ау), готова?\nСтановись на фото-зону (Ща)\nИду на шпильках, как mommy\nНе встречаю по дороге я honey (Хе)\nБлин, забыла, это же я\nOops, прости — заигралась в бильярд\nМне звонит моя лучшая bestie\nЭто RIAXA, мы всегда с ней вместе (Bestie-bestie)\n\n[Припев: CashiFly]\nMommy Ху*wood'а\nВстречай меня на туре\nНе мама Паши Дурова\nОдета я в велюрова\nMommy Hollywood'а\nВстречай меня на туре\nНе мама Паши Дурова\nОдета я в велюрова\n\n[Купле 2: CashiFly]\nПахну духами Chanel\nПодпишись на мой channel\nЯ давно уже на chill'е\nСоц. сети это подтвердили\nБегу на shopping я к лп\nНе пою я как лп\nВсе встречаем маму в здании\nЯ еду посещать Данию\n[Припев: diviaxel]\nMommy Hollywood'а\nВстречай меня на туре\nНе мама Паши Дурова\nОдета я в велюрова\nMommy Hollywood'а\nВстречай меня на туре\nНе мама Паши Дурова\nОдета я в велюрова\n\n[Аутро: CashiFly]\nMommy!" },
+      { id:"sarcasm", title:"SARCASM", artist:"CashiFly", date:"27.02.2026", cover:"https://i.postimg.cc/G8ZB8Tq5/IMG-20260306-102025-336.jpg", color:"sarcasm", word:"SARCASM", platforms:[], info:"второй релиз в карьере, популярен в яндексе.", lyrics:"[Куплет 1]\nГоворю: \"Вы красивые\" всем подряд\nНо они не выкупают этот сарказм\nФлай в здании, суки встали в ряд\nМои рифмы всем доставляют оргазм\nЯ говорю лишь то, что люди хотят слышать\nОни верят, но я говорю с сарказмом в лица\nЯ лучше тебя во всем — нет, не надо злиться\nDiviaxel и Rich Diva — мои тигрицы\n[Припев]\nНе зову на фит, они молят место\nПервое место в Forbes, я имею вес, да\nФаны на концерте ждут моего приезда\nВсе комплименты — правда, тут нету лести\n\n[Куплет 2]\nНа вершине км, как пищевой цепочки\nОни плят, чтоб я спела на их юиточек биточке\nCначала на массаж, потом — на ноготочки\nЧитаю рэп о жизни, а потом снимаю обложки\nЕсли бабок нет, не фитуй со мной\nИли заплати за фит двойной ценой\nТебе ничего не светит, ведь твой капитал нулевой\nКак на то я ща rich witch — сгребаю деньги метлой\n\n[Припев]\nЕсли бабок нет, не фитуй со мной\nИли заплати за фит двойной ценой\nТебе ничего не светит, ведь твой капитал нулевой\nКак на то я ща rich witch — сгребаю деньги метлой" },
+      { id:"fly", title:"Fly", artist:"CashiFly", date:"06.02.2026", cover:"https://i.postimg.cc/Wd265089/IMG-20260205-235443-038.jpg", color:"fly", word:"FLY", platforms:[], info:"является одним из самых любимых среди фанатов и самой исполнительницы.", lyrics:"[Куплет 1]\nМой абонемент в спортзал качает мой ass\nПоднимая бабки, я забываю стресс\nЯ — american рэп-дива и имею большой вес\nЦены на коллаб со мной взлетели до небес\nЛюксовые отели, red-дорожка и массаж\nДля богини Флай это привычный пилотаж\nМеня умоляла вчера о фите Минаж\nНо я ей отказала, чтоб вызвать ажиотаж\n[Припев]\nНе слушаю условия — ведь я сразу в игре\nТы только попиздишь, а я держу тебя на прицеле\nГолливудская звезда — у меня деньги на столе\nМоё «упасть на дно» для тебя как «взлететь наверх»\n\n[Куплет 2]\nУ меня чёрный пояс по количеству деньжат\nЯ бью крупным чеком, будто это автомат\nКупюры в чемодане ровно выложены в ряд\nСкоро в новостях увидишь: «Флай купила себе штат»\nУ меня в сумке бабки, я питаюсь только лобстерами\nПосле каждого релиза я лечу на остров — в отпуск\nМне отдают имущество, чтоб получить автограф\nУ меня так много съёмок — за мной везде ходит фотограф\n\n[Припев]\nНе слушаю условия — ведь я сразу в игре\nТы только попиздишь, а я держу тебя на прицеле\nГолливудская звезда — у меня деньги на столе\nМоё «упасть на дно» для тебя как «взлететь наверх»" }
+    ];
 
-      // ---------- КАРУСЕЛЬ ----------
-      const slides = document.getElementById('carouselSlides');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const dotsContainer = document.getElementById('carouselDots');
-      const slideCount = slides.children.length;
-      let currentIndex = 0;
-      let intervalId = null;
+    const container = document.getElementById('releasesContainer');
+    container.innerHTML = releasesData.map(r => `
+      <div class="release-row">
+        <div class="release ${r.color}">
+          <div class="floating-words">
+            <div class="floating-word">${r.word}</div><div class="floating-word">${r.word}</div><div class="floating-word">${r.word}</div>
+          </div>
+          <div class="release-bg"></div>
+          <div class="release-content">
+            <div class="release-cover"><img src="${r.cover}" alt="${r.title}" loading="lazy"></div>
+            <div class="release-text">
+              <div class="release-title">${r.title}</div>
+              <div class="release-artist">${r.artist}</div>
+              <div class="release-date">${r.date}</div>
+              <div class="platforms-row">${r.platforms.map(p=>`<a href="${p.u}" target="_blank" class="plat-icon">${p.n}</a>`).join('')}</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-squares">
+          <div class="info-square" data-action="info" data-id="${r.id}"><div>i</div>Инфо</div>
+          <div class="info-square" data-action="lyrics" data-id="${r.id}"><div>T</div>Текст</div>
+        </div>
+      </div>
+    `).join('');
 
-      function updateCarousel() {
-        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-        Array.from(dotsContainer.children).forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
-      }
-
-      function createDots() {
-        for (let i = 0; i < slideCount; i++) {
-          const dot = document.createElement('span');
-          dot.classList.add('dot');
-          if (i === 0) dot.classList.add('active');
-          dot.addEventListener('click', () => { currentIndex = i; updateCarousel(); resetAutoSlide(); });
-          dotsContainer.appendChild(dot);
-        }
-      }
-
-      function nextSlide() { currentIndex = (currentIndex + 1) % slideCount; updateCarousel(); }
-      function prevSlide() { currentIndex = (currentIndex - 1 + slideCount) % slideCount; updateCarousel(); }
-      function resetAutoSlide() { if (intervalId) clearInterval(intervalId); intervalId = setInterval(nextSlide, 5000); }
-
-      prevBtn.addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
-      nextBtn.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
-      createDots();
-      resetAutoSlide();
-
-      // Статичный счётчик
-      document.getElementById('totalPlaysDisplay').textContent = '25 887';
-
-      // Плавный скролл
-      document.querySelectorAll('.nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href');
-          if (targetId === '#') return;
-          const targetEl = document.querySelector(targetId);
-          if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
+    document.querySelectorAll('.info-square').forEach(sq => {
+      sq.addEventListener('click', () => {
+        const id = sq.dataset.id;
+        const action = sq.dataset.action;
+        const rel = releasesData.find(r => r.id === id);
+        const text = action === 'info' ? rel.info : rel.lyrics;
+        showModal(rel.color, text);
       });
+    });
 
-      window.addEventListener('beforeunload', () => {
-        if (intervalId) clearInterval(intervalId);
+    function showModal(colorClass, text) {
+      const modal = document.createElement('div');
+      modal.className = `modal active ${colorClass}`;
+      modal.innerHTML = `<div class="modal-content"><span class="close">&times;</span><div class="modal-text">${text}</div></div>`;
+      document.body.appendChild(modal);
+      modal.querySelector('.close').addEventListener('click', () => modal.remove());
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      modal.querySelector('.modal-content').scrollTop = 0;
+    }
+
+    const galleryImages = [
+      "https://i.postimg.cc/x8D4bvsw/55f01c26-0bac-465c-a30b-a979e0d30d17.png",
+      "https://i.postimg.cc/pXdDJ9wt/c0154ea7-411f-4099-bc95-f8a079e37af5.png",
+      "https://i.postimg.cc/W40r10kF/ef9d01aa-1fab-4ac8-bee2-451a9a15aa99.png",
+      "https://i.postimg.cc/8cXf0H2F/456b0240-ce79-483b-a7d3-9c21ad0d4041.png",
+      "https://i.postimg.cc/63dhgD0m/e76453fe-d3ae-4d9a-8632-239a9b84391b.png",
+      "https://i.postimg.cc/65zM9xXK/b73e4b6f-e063-44bf-b97e-352f9fbf9b6e.png",
+      "https://i.postimg.cc/wvG6KGB8/3d786a44-4b01-4148-a0b6-5b64f81a557f.png",
+      "https://i.postimg.cc/GmCTSHNQ/2f3c4d3f-65cc-4a73-b353-0b43d5f971b5.png",
+      "https://i.postimg.cc/R08HdXzV/65485194-cd1f-4ed3-8bb9-12816fff11fa.png",
+      "https://i.postimg.cc/6pMjWJCc/772413dd-fddf-4114-9d7b-1ab8051dcff0.png",
+      "https://i.postimg.cc/Y2Qd4m1q/985214f2-28a4-4abb-ab5c-262e23164f14.png",
+      "https://i.postimg.cc/zX0SWw3X/4db003b5-7dc1-462c-a22f-b7da61ac9c37.png"
+    ];
+
+    const cashiFeed = document.getElementById('cashiFeed');
+    cashiFeed.innerHTML = galleryImages.map(src => `
+      <div class="feed-item" data-src="${src}">
+        <img src="${src}" alt="CashiGram фото" loading="lazy">
+      </div>
+    `).join('');
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxDownload = document.getElementById('lightboxDownload');
+    let currentImageIndex = 0;
+
+    function openLightbox(index) {
+      currentImageIndex = index;
+      lightboxImg.src = galleryImages[index];
+      lightbox.classList.add('active');
+    }
+    function closeLightbox() { lightbox.classList.remove('active'); }
+    function nextImage() { currentImageIndex = (currentImageIndex + 1) % galleryImages.length; lightboxImg.src = galleryImages[currentImageIndex]; }
+    function prevImage() { currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length; lightboxImg.src = galleryImages[currentImageIndex]; }
+    function downloadImage() { window.open(galleryImages[currentImageIndex], '_blank'); }
+
+    document.querySelectorAll('.feed-item').forEach((item, idx) => {
+      item.addEventListener('click', () => openLightbox(idx));
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxNext.addEventListener('click', nextImage);
+    lightboxPrev.addEventListener('click', prevImage);
+    lightboxDownload.addEventListener('click', downloadImage);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+    lightbox.addEventListener('touchend', (e) => {
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (diff > 50) prevImage();
+      else if (diff < -50) nextImage();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(btn.dataset.tab).classList.add('active');
       });
-    })();
+    });
   </script>
 </body>
 </html>
